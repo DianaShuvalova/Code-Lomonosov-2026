@@ -10,16 +10,16 @@
 #define R_MAX       (sqrtf(CX*CX + CY*CY))
 #define F           (R_MAX / THETA_MAX)     /// пикс/рад
 
-/**
- * Преобразование пиксельных координат и id камеры в углы единой системы КА.
- * Вход:
- *   x, y – координаты объекта на матрице (целые пиксели)
- *   id   – идентификатор камеры: 0 – передняя, 1 – боковая
- * Выход:
- *   azimuth   – азимутальный угол в горизонтальной плоскости (рад)
- *   elevation – угол места (рад)
- */
-void get_unified_angles_fisheye(int x, int y, int id, float* azimuth, float* elevation) {
+///
+ Преобразование пиксельных координат и id камеры в углы единой системы КА.
+ Вход:
+     x, y – координаты объекта на матрице (целые пиксели)
+     id   – идентификатор камеры
+ Выход:
+     azimuth   – азимутальный угол в горизонтальной плоскости (рад)
+     elevation – угол места (рад)
+///
+void get_angles_fisheye(int x, int y, int id, float* azimuth, float* elevation) {
     /// Смещения от оптического центра
     float dx = (float)x - CX;
     float dy = (float)y - CY;
@@ -50,11 +50,11 @@ void get_unified_angles_fisheye(int x, int y, int id, float* azimuth, float* ele
 
 int main(void) {
     int x, y, id;
-    printf("Введите x y id (1 или 2): ");
+    printf("Введите x y id: ");
     scanf("%d %d %d", &x, &y, &id);
 
     float az, el;
-    get_unified_angles_fisheye(x, y, id, &az, &el);
+    get_angles_fisheye(x, y, id, &az, &el);
 
     printf("Азимут: %.4f рад (%.2f°)\n", az, az * 180.0f / (float)M_PI);
     printf("Угол места: %.4f рад (%.2f°)\n", el, el * 180.0f / (float)M_PI);
